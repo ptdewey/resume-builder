@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/BurntSushi/toml"
@@ -69,13 +68,14 @@ func parsePersonalLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 		switch k.String() {
 		case "name":
 			contents.Personal.Name = v.String()
-			fmt.Println(v.String())
 		case "location":
 			contents.Personal.Location = v.String()
 		case "email":
 			contents.Personal.Email = v.String()
 		case "phone":
 			contents.Personal.Phone = v.String()
+		case "additional_info":
+			contents.Personal.AdditionalInfo = v.String()
 		case "website":
 			contents.Personal.Website = v.String()
 		case "github":

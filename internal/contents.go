@@ -12,10 +12,11 @@ type ResumeContents struct {
 }
 
 type PersonalInfo struct {
-	Name     string
-	Location string
-	Email    string
-	Phone    string
+	Name           string
+	Location       string
+	Email          string
+	Phone          string
+	AdditionalInfo string
 
 	// Socials
 	Website  string

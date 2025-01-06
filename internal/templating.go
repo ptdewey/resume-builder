@@ -5,7 +5,7 @@ import (
 	"text/template"
 )
 
-func FillTemplate(templatePath string, outputPath string) error {
+func PopulateTemplate(contents ResumeContents, templatePath string, outputPath string) error {
 	bytes, err := os.ReadFile(templatePath)
 	if err != nil {
 		return err
@@ -21,8 +21,7 @@ func FillTemplate(templatePath string, outputPath string) error {
 		return err
 	}
 
-	// TODO: fill with resume contents
-	if err := tmpl.Execute(f, []string{"text"}); err != nil {
+	if err := tmpl.Execute(f, contents); err != nil {
 		return err
 	}
 
