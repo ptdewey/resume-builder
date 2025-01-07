@@ -6,6 +6,8 @@ import (
 
 	"github.com/BurntSushi/toml"
 	lua "github.com/yuin/gopher-lua"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 func ParseTomlResumeContents(contentsPath string) (ResumeContents, error) {
@@ -167,24 +169,20 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 }
 
 func parseSkillsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
-	// REFACTOR: allow tables of any name, assume no additional subtables
+	// TODO: Custom handling of sections, merging of string slices
+	// - use subtables to filter by job?
+
+	contents.Skills.Sections = make(map[string]skillValues)
 	tbl.ForEach(func(key, value lua.LValue) {
-		switch key.String() {
-		case "languages":
-			if languagesTable, ok := value.(*lua.LTable); ok {
-				contents.Skills.Languages = luaTableToStringSlice(languagesTable)
-			}
-		case "libraries":
-			if librariesTable, ok := value.(*lua.LTable); ok {
-				contents.Skills.Libraries = luaTableToStringSlice(librariesTable)
-			}
-		case "databases":
-			if databasesTable, ok := value.(*lua.LTable); ok {
-				contents.Skills.Databases = luaTableToStringSlice(databasesTable)
-			}
-		case "tools":
-			if toolsTable, ok := value.(*lua.LTable); ok {
-				contents.Skills.Tools = luaTableToStringSlice(toolsTable)
+		if sectionName := key.String(); sectionName != "" {
+			if sectionTbl, ok := value.(*lua.LTable); ok {
+				// TODO: filter out underscores, capitalize additional words
+				name := cases.Title(language.English, cases.Compact).String(sectionName)
+				values := luaTableToStringSlice(sectionTbl)
+				contents.Skills.Sections[name] = skillValues{
+					Values:       values,
+					JoinedValues: strings.Join(values, ", "),
+				}
 			}
 		}
 	})

@@ -3,7 +3,7 @@
 #show link: underline
 
 #set page(
-  margin: (x: 0.9cm, y: 1.3cm)
+  margin: (x: 0.9cm, y: 1.0cm)
 )
 
 #set par(justify: true)
@@ -32,6 +32,7 @@
 #chiline()
 {{ range $item := .Education.EducationItems }}
 #text(10pt)[
+  // education item header
   #grid(
     columns: (1fr, 1.5fr, 1fr), // NOTE: adjust column fractions as necessary
     gutter: auto,
@@ -39,6 +40,7 @@
     align(center)[_{{ $item.Location }}_],
     align(right)[{{ $item.Dates }}],
   )
+// education item details
   #pad(top: -0.2cm, list(
     [{{ $item.Degree }} #h(1fr) GPA: {{ $item.GPA }}], {{ range $bullet := $item.AdditionalInfo }}
     [{{ $bullet }}], {{ end }}
@@ -69,12 +71,11 @@
 #chiline()
 
 // TODO: allow different table names here for dynamic changes
-#list(
-  [
-    *Languages*: {{ range $item := .Skills.Languages }}
-    {{ $item }} {{end}} // FIX: merge some of this in go side (requires additional struct fields)
-  ]
-)
+#text(10pt)[
+  #list({{ range $section, $values := .Skills.Sections }}
+    [*{{ $section }}:* {{ $values.JoinedValues }}],{{end}} // REFACTOR: maybe change this to not a list
+  )
+]
 
 
 == Projects

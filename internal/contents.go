@@ -63,9 +63,15 @@ type ProjectItem struct {
 }
 
 type SkillsInfo struct {
-	Languages []string
-	Libraries []string
-	Databases []string
-	Tools     []string
+	// Languages []string
+	// Libraries []string
+	// Databases []string
+	// Tools     []string
 	// TODO: figure out how to integrate other things here (libs, frameworks, techs, etc.)
+	Sections map[string]skillValues `toml:"sections"`
+}
+
+type skillValues struct {
+	Values       []string
+	JoinedValues string
 }
