@@ -40,7 +40,7 @@
     align(center)[_{{ $item.Location }}_],
     align(right)[{{ $item.Dates }}],
   )
-// education item details
+  // education item details
   #pad(top: -0.2cm, list(
     [{{ $item.Degree }} #h(1fr) GPA: {{ $item.GPA }}], {{ range $bullet := $item.AdditionalInfo }}
     [{{ $bullet }}], {{ end }}
@@ -54,10 +54,11 @@
 #text(10pt)[
   // work item header
   #grid(
-    columns: (1fr, 1.5fr, 1fr), // NOTE: adjust column fractions as necessary
+    columns: (1fr, 2fr, 1fr), // NOTE: adjust column fractions as necessary
     gutter: auto,
+    // TODO: maybe separate to quad layout
     align(left)[*{{ $item.JobTitle }}*],
-    align(center)[_{{ $item.Company }}_],
+    align(center)[_{{ $item.Company }} - {{ $item.Location }}_],
     align(right)[{{ $item.Dates }}],
   )
   // work item details (and location?)

@@ -10,6 +10,8 @@ import (
 	"golang.org/x/text/language"
 )
 
+// FIX: ensure order of unnamed tables is always the same (order by dates where possible)
+
 func ParseTomlResumeContents(contentsPath string) (ResumeContents, error) {
 	var out ResumeContents
 
@@ -171,7 +173,6 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 func parseSkillsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 	// TODO: Custom handling of sections, merging of string slices
 	// - use subtables to filter by job?
-
 	contents.Skills.Sections = make(map[string]skillValues)
 	tbl.ForEach(func(key, value lua.LValue) {
 		if sectionName := key.String(); sectionName != "" {
