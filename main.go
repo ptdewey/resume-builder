@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"resume-builder/internal"
 	"strings"
+
+	"github.com/ptdewey/resume-builder/internal"
 )
 
 func main() {

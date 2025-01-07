@@ -1,4 +1,4 @@
-module resume-builder
+module github.com/ptdewey/resume-builder
 
 go 1.23.3
 

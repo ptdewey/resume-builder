@@ -35,6 +35,9 @@ resume-builder contents.lua
 
 Resume builder is configured through the use of a lua file, an example of which can be found in [examples/contents.lua](./examples/contents.lua).
 
+
+NOTE: Naming optional tables can cause entries to be out of the specified order
+
 ```lua
 local resume = {}
 
