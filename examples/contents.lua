@@ -1,41 +1,3 @@
-# Resume Builder
-
-A programmatic resume builder built using Go and Typst.
-
-![example-resume](./assets/example.png)
-
-## Installation
-
-First, install the necessary [dependencies](#dependencies)
-
-Resume builder can be installed with 'go install':
-```sh
-go install 'github.com/ptdewey/resume-builder'
-```
-
-It can also be built from source:
-```sh
-git clone https://github.com/ptdewey/resume-builder.git
-cd ./resume-builder
-go build
-```
-
-## Usage
-
-Usage: `resume-builder [input-lua-path]`
-
-By default, resume builder will use the lua configuration file found in [examples/contents.lua](./examples/contents.lua).
-To use a different file, pass the desired file path as an argument to the program.
-
-```sh
-resume-builder contents.lua
-```
-
-### Configuration
-
-Resume builder is configured through the use of a lua file, an example of which can be found in [examples/contents.lua](./examples/contents.lua).
-
-```lua
 local resume = {}
 
 -- Personal Info
@@ -132,13 +94,3 @@ resume.skills = {
 }
 
 return resume
-```
-### Dependencies
-
-Go and Typst are required to use the builder.
-No Lua interpreter is required, as one is embedded in the Go program.
-
-| Dependency | Version |
-|------------|---------|
-| Go         | 1.23.3  |
-| Typst      | 0.12.0  |
