@@ -30,10 +30,8 @@
 
 == Education
 #chiline()
-
 {{ range $item := .Education.EducationItems }}
 #text(10pt)[
-  // work item header
   #grid(
     columns: (1fr, 1.5fr, 1fr), // NOTE: adjust column fractions as necessary
     gutter: auto,
@@ -41,16 +39,15 @@
     align(center)[_{{ $item.Location }}_],
     align(right)[{{ $item.Dates }}],
   )
-  // work item details (and location?)
-  #pad(top: -0.25cm, list(
-    [{{ $item.Degree }} #h(1fr) GPA: {{ $item.GPA }}],
+  #pad(top: -0.2cm, list(
+    [{{ $item.Degree }} #h(1fr) GPA: {{ $item.GPA }}], {{ range $bullet := $item.AdditionalInfo }}
+    [{{ $bullet }}], {{ end }}
   ))
 ]
 {{ end }}
 
 == Work Experience
 #chiline()
-
 {{ range $item := .Work.WorkItems }}
 #text(10pt)[
   // work item header
@@ -62,27 +59,36 @@
     align(right)[{{ $item.Dates }}],
   )
   // work item details (and location?)
-  // TODO: improve spacing between bullet points (and headk)
-  #list(
-    {{ range $bullet := $item.Description }}
-    [{{ $bullet }}],
-    {{ end }}
-  )
+  #pad(top: -0.2cm, list({{ range $bullet := $item.Description }}
+    [{{ $bullet }}], {{ end }}
+  ))
 ]
 {{ end }}
-// TODO:
-
-
-// TODO:
-
 
 == Skills
 #chiline()
 
-// TODO:
+// TODO: allow different table names here for dynamic changes
+#list(
+  [
+    *Languages*: {{ range $item := .Skills.Languages }}
+    {{ $item }} {{end}} // FIX: merge some of this in go side (requires additional struct fields)
+  ]
+)
 
 
 == Projects
 #chiline()
-
-// TODO:
+{{ range $item := .Projects.ProjectItems }}
+#text(10pt)[
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: auto,
+    align(left)[#link("{{ $item.Link }}", [*{{ $item.Name }}*])],
+    align(right)[{{ $item.Tools }}],
+  )
+  #pad(top: -0.2cm, list({{ range $bullet := $item.Description }}
+    [{{ $bullet }}], {{ end }}
+  ))
+]
+{{ end }}

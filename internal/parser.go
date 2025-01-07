@@ -2,6 +2,7 @@ package internal
 
 import (
 	"os"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 	lua "github.com/yuin/gopher-lua"
@@ -102,6 +103,10 @@ func parseEducationLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 					item.Dates = value.String()
 				case "gpa":
 					item.GPA = value.String()
+				case "additional_info":
+					if additionalInfoTbl, ok := value.(*lua.LTable); ok {
+						item.AdditionalInfo = luaTableToStringSlice(additionalInfoTbl)
+					}
 				}
 			})
 			contents.Education.EducationItems = append(contents.Education.EducationItems, item)
@@ -138,15 +143,17 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 	tbl.ForEach(func(_, value lua.LValue) {
 		if itemTable, ok := value.(*lua.LTable); ok {
 			var item ProjectItem
+			// TODO: programmatic switching of projects (add tag attr to struct?) (handle elsewhere)
 			itemTable.ForEach(func(key, value lua.LValue) {
 				switch key.String() {
 				case "name":
 					item.Name = value.String()
 				case "link":
+					// TODO: add https:// if not included in parsed link (also do this with personal links) (maybe use url lib?)
 					item.Link = value.String()
-				case "languages":
-					if languagesTable, ok := value.(*lua.LTable); ok {
-						item.Languages = luaTableToStringSlice(languagesTable)
+				case "tools":
+					if toolsTable, ok := value.(*lua.LTable); ok {
+						item.Tools = strings.Join(luaTableToStringSlice(toolsTable), ", ")
 					}
 				case "description":
 					if descriptionTable, ok := value.(*lua.LTable); ok {
@@ -160,6 +167,7 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 }
 
 func parseSkillsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
+	// REFACTOR: allow tables of any name, assume no additional subtables
 	tbl.ForEach(func(key, value lua.LValue) {
 		switch key.String() {
 		case "languages":
