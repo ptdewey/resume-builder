@@ -115,7 +115,7 @@ func parseWorkLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 			var item WorkItem
 			itemTable.ForEach(func(key, value lua.LValue) {
 				switch key.String() {
-				case "jobTitle":
+				case "job_title":
 					item.JobTitle = value.String()
 				case "company":
 					item.Company = value.String()
