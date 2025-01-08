@@ -82,11 +82,11 @@ func parsePersonalLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 		case "additional_info":
 			contents.Personal.AdditionalInfo = v.String()
 		case "website":
-			contents.Personal.Website = v.String()
+			contents.Personal.Website = stringToURL(v.String())
 		case "github":
-			contents.Personal.GitHub = v.String()
+			contents.Personal.GitHub = stringToURL(v.String())
 		case "linkedin":
-			contents.Personal.LinkedIn = v.String()
+			contents.Personal.LinkedIn = stringToURL(v.String())
 		}
 	})
 }
@@ -105,8 +105,8 @@ func parseEducationLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 					item.Degree = value.String()
 				case "dates":
 					item.Dates = value.String()
-				case "gpa":
-					item.GPA = value.String()
+				case "honors":
+					item.Honors = value.String()
 				case "additional_info":
 					if additionalInfoTbl, ok := value.(*lua.LTable); ok {
 						item.AdditionalInfo = luaTableToStringSlice(additionalInfoTbl)
@@ -154,7 +154,9 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 					item.Name = value.String()
 				case "link":
 					// TODO: add https:// if not included in parsed link (also do this with personal links) (maybe use url lib?)
-					item.Link = value.String()
+					item.Link = stringToURL(value.String())
+				case "dates":
+					item.Dates = value.String()
 				case "tools":
 					if toolsTable, ok := value.(*lua.LTable); ok {
 						item.Tools = strings.Join(luaTableToStringSlice(toolsTable), ", ")
@@ -187,12 +189,4 @@ func parseSkillsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 			}
 		}
 	})
-}
-
-func luaTableToStringSlice(tbl *lua.LTable) []string {
-	var result []string
-	tbl.ForEach(func(_, value lua.LValue) {
-		result = append(result, value.String())
-	})
-	return result
 }

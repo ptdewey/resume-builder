@@ -35,7 +35,7 @@ type EducationItem struct {
 	Location       string
 	Degree         string
 	Dates          string
-	GPA            string
+	Honors         string
 	AdditionalInfo []string
 }
 
@@ -58,6 +58,7 @@ type ProjectsInfo struct {
 type ProjectItem struct {
 	Name        string
 	Link        string
+	Dates       string
 	Tools       string
 	Description []string
 }
