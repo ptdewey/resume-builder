@@ -96,7 +96,6 @@
   #quad_grid(
     lower_top_pad: -0.2cm,
     lower_bottom_pad: -0.2cm,
-    // TODO: maybe separate to quad layout
     [*{{ $item.Company }}*],
     [{{ $item.Location }}],
     [_{{ $item.JobTitle }}_],

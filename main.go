@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/ptdewey/resume-builder/internal"
+	"github.com/ptdewey/rooibos/internal"
 )
 
 // TODO: maybe make the template file a runtime dependency (passed in with a flag)
@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 
 	if *contentsPath == "examples/contents.lua" {
-		fmt.Println("No input file was provided, defaulting to './examples/contents.lua'. Use 'resume-builder -i <your-resume.lua>'")
+		fmt.Println("No input file was provided, defaulting to './examples/contents.lua'. Use 'rooibos -i <your-resume.lua>'")
 	}
 
 	fmt.Println("Parsing resume contents...")

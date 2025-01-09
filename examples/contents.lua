@@ -54,7 +54,7 @@ resume.projects = {
     -- Sub-table names are optional for the projects table
     {
         name = "Resume Builder",
-        link = "https://github.com/ptdewey/resume-builder",
+        link = "https://github.com/ptdewey/rooibos",
         tools = { "Go", "Typst", "Lua" },
         description = {
             "Easy to use resume builder that builds your resume from a Lua configuration file consisting of a small number of tables",

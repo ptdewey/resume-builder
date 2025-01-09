@@ -1,4 +1,4 @@
-module github.com/ptdewey/resume-builder
+module github.com/ptdewey/rooibos
 
 go 1.23.3
 
