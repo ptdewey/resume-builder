@@ -31,6 +31,7 @@ func main() {
 	}
 
 	fmt.Println("Populating template file...")
+	// FIX: change to LastnameFirstName-Resume (multiple inputs in contents file)
 	outputPath := strings.ReplaceAll(contents.Personal.Name, " ", "") + "-Resume.typ"
 	if err := internal.PopulateTemplate(contents, templateFile, outputPath); err != nil {
 		panic(err)

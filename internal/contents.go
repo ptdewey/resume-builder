@@ -1,14 +1,11 @@
 package internal
 
-// TODO: could use JS (or Lua) -> JSON -> Go pipeline for data flow instead of toml
-// - toml may not allow complex structures like I want for nested struct arrays and optional dropping and adding of others
-
 type ResumeContents struct {
-	Personal  PersonalInfo  `toml:"personal"`
-	Education EducationInfo `toml:"education"`
-	Work      WorkInfo      `toml:"work"`
-	Projects  ProjectsInfo  `toml:"projects"`
-	Skills    SkillsInfo    `toml:"skills"`
+	Personal  PersonalInfo
+	Education EducationInfo
+	Work      WorkInfo
+	Projects  ProjectsInfo
+	Skills    SkillsInfo
 }
 
 type PersonalInfo struct {
@@ -17,17 +14,13 @@ type PersonalInfo struct {
 	Email          string
 	Phone          string
 	AdditionalInfo string
-
-	// Socials
-	Website  string
-	LinkedIn string
-	GitHub   string
-
-	// TODO: maybe add section for citizenship
+	Website        string
+	LinkedIn       string
+	GitHub         string
 }
 
 type EducationInfo struct {
-	EducationItems []EducationItem `toml:"item"`
+	EducationItems []EducationItem
 }
 
 type EducationItem struct {
@@ -40,7 +33,7 @@ type EducationItem struct {
 }
 
 type WorkInfo struct {
-	WorkItems []WorkItem `toml:"item"`
+	WorkItems []WorkItem
 }
 
 type WorkItem struct {
@@ -52,7 +45,7 @@ type WorkItem struct {
 }
 
 type ProjectsInfo struct {
-	ProjectItems []ProjectItem `toml:"item"`
+	ProjectItems []ProjectItem
 }
 
 type ProjectItem struct {
@@ -64,12 +57,7 @@ type ProjectItem struct {
 }
 
 type SkillsInfo struct {
-	// Languages []string
-	// Libraries []string
-	// Databases []string
-	// Tools     []string
-	// TODO: figure out how to integrate other things here (libs, frameworks, techs, etc.)
-	Sections map[string]skillValues `toml:"sections"`
+	Sections map[string]skillValues
 }
 
 type skillValues struct {

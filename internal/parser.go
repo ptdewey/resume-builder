@@ -1,31 +1,12 @@
 package internal
 
 import (
-	"os"
 	"strings"
 
-	"github.com/BurntSushi/toml"
 	lua "github.com/yuin/gopher-lua"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
-
-// FIX: ensure order of unnamed tables is always the same (order by dates where possible)
-
-func ParseTomlResumeContents(contentsPath string) (ResumeContents, error) {
-	var out ResumeContents
-
-	bytes, err := os.ReadFile(contentsPath)
-	if err != nil {
-		return out, err
-	}
-
-	if _, err := toml.Decode(string(bytes), &out); err != nil {
-		return out, nil
-	}
-
-	return out, nil
-}
 
 func ParseLuaResumeContents(scriptPath string) (ResumeContents, error) {
 	var out ResumeContents
@@ -37,6 +18,7 @@ func ParseLuaResumeContents(scriptPath string) (ResumeContents, error) {
 		return out, err
 	}
 
+	// FIX: ensure order of unnamed tables is always the same (order by dates where possible)
 	luaTable := L.Get(-1)
 	if tbl, ok := luaTable.(*lua.LTable); ok {
 		tbl.ForEach(func(key lua.LValue, value lua.LValue) {
