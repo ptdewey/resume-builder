@@ -25,10 +25,10 @@ go build
 Usage: `resume-builder [input-lua-path]`
 
 By default, resume builder will use the lua configuration file found in [examples/contents.lua](./examples/contents.lua).
-To use a different file, pass the desired file path as an argument to the program.
+To use a different file, pass the desired file path as flag argument to the program.
 
 ```sh
-resume-builder contents.lua
+resume-builder -i contents.lua
 ```
 
 ### Configuration

@@ -5,12 +5,7 @@ import (
 	"text/template"
 )
 
-func PopulateTemplate(contents ResumeContents, templatePath string, outputPath string) error {
-	bytes, err := os.ReadFile(templatePath)
-	if err != nil {
-		return err
-	}
-
+func PopulateTemplate(contents ResumeContents, bytes []byte, outputPath string) error {
 	tmpl, err := template.New("resume").Parse(string(bytes))
 	if err != nil {
 		return err
