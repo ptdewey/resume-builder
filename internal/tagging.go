@@ -16,6 +16,8 @@ func SelectTags(contents *ResumeContents, tags []string) {
 		for _, p := range selected {
 			if !contains(temp.Projects.ProjectItems, ProjectItem{Name: p.Name}, "Name") {
 				temp.Projects.ProjectItems = append(temp.Projects.ProjectItems, p)
+			} else {
+				projectCount--
 			}
 		}
 		// TODO: also allow tagging of skills
