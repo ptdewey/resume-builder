@@ -2,6 +2,7 @@ package internal
 
 import (
 	"net/url"
+	"reflect"
 
 	lua "github.com/yuin/gopher-lua"
 )
@@ -27,4 +28,19 @@ func stringToURL(s string) string {
 	}
 
 	return s
+}
+
+func contains[T any](s []T, v T, field string) bool {
+	for _, t := range s {
+		vVal := reflect.ValueOf(v)
+		tVal := reflect.ValueOf(t)
+
+		vField := vVal.FieldByName(field)
+		tField := tVal.FieldByName(field)
+
+		if vField.IsValid() && tField.IsValid() && vField.Interface() == tField.Interface() {
+			return true
+		}
+	}
+	return false
 }

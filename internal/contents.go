@@ -54,6 +54,7 @@ type ProjectItem struct {
 	Dates       string
 	Tools       string
 	Description []string
+	Tags        []string
 }
 
 type SkillsInfo struct {

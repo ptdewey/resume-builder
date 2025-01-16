@@ -17,7 +17,8 @@ var templateFile []byte
 
 func main() {
 	contentsPath := flag.String("i", "examples/contents.lua", "-i=contents.lua")
-	noCompileFlag := flag.Bool("no-compile", false, "Do not compile result typ file.")
+	noCompileFlag := flag.Bool("no-compile", false, "--no-compile=true (default \"false\")")
+	contentTags := flag.String("tags", "", "--tags=\"tag1 tag2 tag3\"")
 	flag.Parse()
 
 	if *contentsPath == "examples/contents.lua" {
@@ -28,6 +29,11 @@ func main() {
 	contents, err := internal.ParseLuaResumeContents(*contentsPath)
 	if err != nil {
 		panic(err)
+	}
+
+	if *contentTags != "" {
+		tags := strings.Split(*contentTags, " ")
+		internal.SelectTags(&contents, tags)
 	}
 
 	fmt.Println("Populating template file...")

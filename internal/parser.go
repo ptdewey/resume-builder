@@ -147,7 +147,12 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 					if descriptionTable, ok := value.(*lua.LTable); ok {
 						item.Description = luaTableToStringSlice(descriptionTable)
 					}
+				case "tags":
+					if tagsTable, ok := value.(*lua.LTable); ok {
+						item.Tags = luaTableToStringSlice(tagsTable)
+					}
 				}
+
 			})
 			contents.Projects.ProjectItems = append(contents.Projects.ProjectItems, item)
 		}
