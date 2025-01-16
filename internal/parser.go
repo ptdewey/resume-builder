@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"strings"
 
 	lua "github.com/yuin/gopher-lua"
@@ -8,14 +9,15 @@ import (
 	"golang.org/x/text/language"
 )
 
-func ParseLuaResumeContents(scriptPath string) (ResumeContents, error) {
+func ParseLuaResumeContents(scriptPath string) (ResumeContents, []string, error) {
 	var out ResumeContents
+	var defaultTags []string
 
 	L := lua.NewState()
 	defer L.Close()
 
 	if err := L.DoFile(scriptPath); err != nil {
-		return out, err
+		return out, nil, err
 	}
 
 	// FIX: ensure order of unnamed tables is always the same (order by dates where possible)
@@ -43,11 +45,17 @@ func ParseLuaResumeContents(scriptPath string) (ResumeContents, error) {
 				if skillsTbl, ok := value.(*lua.LTable); ok {
 					parseSkillsLuaTable(&out, skillsTbl)
 				}
+			case "default_tags":
+				if tagsTbl, ok := value.(*lua.LTable); ok {
+					defaultTags = parseDefaultTagsTable(tagsTbl)
+				}
 			}
+
 		})
 	}
+	fmt.Println("parsed tags: ", defaultTags)
 
-	return out, nil
+	return out, defaultTags, nil
 }
 
 func parsePersonalLuaTable(contents *ResumeContents, tbl *lua.LTable) {
@@ -176,4 +184,13 @@ func parseSkillsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 			}
 		}
 	})
+}
+
+func parseDefaultTagsTable(tbl *lua.LTable) []string {
+	var out []string
+	tbl.ForEach(func(key, value lua.LValue) {
+		fmt.Println(value)
+		out = append(out, value.String())
+	})
+	return out
 }

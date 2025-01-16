@@ -26,7 +26,7 @@ func main() {
 	}
 
 	fmt.Println("Parsing resume contents...")
-	contents, err := internal.ParseLuaResumeContents(*contentsPath)
+	contents, defaultTags, err := internal.ParseLuaResumeContents(*contentsPath)
 	if err != nil {
 		panic(err)
 	}
@@ -34,6 +34,8 @@ func main() {
 	if *contentTags != "" {
 		tags := strings.Split(*contentTags, " ")
 		internal.SelectTags(&contents, tags)
+	} else if defaultTags != nil && len(defaultTags) != 0 {
+		internal.SelectTags(&contents, defaultTags)
 	}
 
 	fmt.Println("Populating template file...")
