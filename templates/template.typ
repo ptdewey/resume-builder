@@ -131,3 +131,8 @@
   ))
 ]
 {{ end }}
+
+// Extras
+#text(size: 4pt, fill: white)[
+  #pad([{{ .Extras.Hidden }}], bottom: -7pt, top: -7pt)
+]

@@ -49,6 +49,10 @@ func ParseLuaResumeContents(scriptPath string) (ResumeContents, []string, error)
 				if tagsTbl, ok := value.(*lua.LTable); ok {
 					defaultTags = parseDefaultTagsTable(tagsTbl)
 				}
+			case "extras":
+				if extrasTbl, ok := value.(*lua.LTable); ok {
+					parseExtraInfoTable(&out, extrasTbl)
+				}
 			}
 
 		})
@@ -160,7 +164,6 @@ func parseProjectsLuaTable(contents *ResumeContents, tbl *lua.LTable) {
 						item.Tags = luaTableToStringSlice(tagsTable)
 					}
 				}
-
 			})
 			contents.Projects.ProjectItems = append(contents.Projects.ProjectItems, item)
 		}
@@ -193,4 +196,15 @@ func parseDefaultTagsTable(tbl *lua.LTable) []string {
 		out = append(out, value.String())
 	})
 	return out
+}
+
+func parseExtraInfoTable(contents *ResumeContents, tbl *lua.LTable) {
+	tbl.ForEach(func(k, v lua.LValue) {
+		switch k.String() {
+		case "visible":
+			contents.Extras.Visible = v.String()
+		case "hidden":
+			contents.Extras.Hidden = v.String()
+		}
+	})
 }

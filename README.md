@@ -136,6 +136,8 @@ resume.skills = {
 
 return resume
 ```
+
+
 ### Dependencies
 
 Go and Typst are required to use the builder.

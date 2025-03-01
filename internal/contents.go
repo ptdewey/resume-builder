@@ -6,6 +6,7 @@ type ResumeContents struct {
 	Work      WorkInfo
 	Projects  ProjectsInfo
 	Skills    SkillsInfo
+	Extras    ExtraInfo
 }
 
 type PersonalInfo struct {
@@ -64,4 +65,9 @@ type SkillsInfo struct {
 type skillValues struct {
 	Values       []string
 	JoinedValues string
+}
+
+type ExtraInfo struct {
+	Visible string
+	Hidden  string
 }
